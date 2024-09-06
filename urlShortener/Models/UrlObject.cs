@@ -7,7 +7,7 @@ public class UrlObject
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public required string Id { get; set; }
+    public string? Id { get; set; }
 
     [BsonElement("url")]
     public string? Url { get; set; } = null!;

@@ -1,3 +1,4 @@
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using urlShortener.Utils;
 
@@ -10,12 +11,16 @@ public class DatabaseController
     public DatabaseController()
     {
         var client = new MongoClient(Config.ATLAS_URI);
-        var database = client.GetDatabase("urlDatabase0");
-        _urlObjects = database.GetCollection<UrlObject>("urlShortener");
+        var database = client.GetDatabase("urlShortener");
+        _urlObjects = database.GetCollection<UrlObject>("urls");
     }
 
-    public UrlObject Get(string id) =>
-        _urlObjects.Find<UrlObject>(urlObject => urlObject.Id == id).FirstOrDefault();
+    public UrlObject Get(string id)
+    {
+        var filter = Builders<UrlObject>.Filter.Eq(url => url.Url, id);
+        
+        return _urlObjects.Find<UrlObject>(filter).FirstOrDefault();
+    }
 
     public UrlObject Create(UrlObject urlObject)
     {

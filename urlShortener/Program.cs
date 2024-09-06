@@ -1,15 +1,4 @@
-using MongoDB.Bson;
-using MongoDB.Driver;
-using MongoDB.Driver.Linq;
-using urlShortener.Utils;
-
-MongoClientSettings settings = MongoClientSettings.FromConnectionString(
-    Config.ATLAS_URI
-);
-
-settings.LinqProvider = LinqProvider.V3;
-
-MongoClient client = new MongoClient(settings);
+using MongoDB.Bson.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
