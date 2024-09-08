@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static urlShortener.Utils.Utils;
@@ -38,18 +39,41 @@ namespace urlShortener.Controllers
         }
         
         [HttpPost]
-        public ObjectResult Post(string? url, int length = 5)
+        public ObjectResult Post(string? url, int length = 5, string customShortenedUrl = "")
         {
-            if (url == null || length < 4)
+            string shortenedUrl = "";
+            if (url == null || length < 4 || length > 10)
             {
                 return this.StatusCode(400, "Bad request");
             }
-            string baseString = url;
-            if (url.Length < 8)
+            
+            if (customShortenedUrl == "")
             {
-                baseString = url + "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                string baseString = url;
+                if (url.Length < 8)
+                {
+                    baseString = url + "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                }
+                while (_databaseController.Get(shortenedUrl) != null)
+                {
+                    shortenedUrl = SelectRandomString(GenerateBase62String(baseString), length);
+                }
             }
-            string shortenedUrl = SelectRandomString(GenerateBase62String(baseString), length);
+            else
+            {
+                string customShortenedUrlRegex = "^[a-zA-Z0-9]*$";
+                
+                if (customShortenedUrl.Length < 4 || customShortenedUrl.Length > 10 || !Regex.IsMatch(customShortenedUrl, customShortenedUrlRegex))
+                {
+                    return this.StatusCode(400, "Bad request");
+                }
+                if (_databaseController.Get(customShortenedUrl) != null)
+                {
+                    return this.StatusCode(409, "Conflict");
+                }
+                shortenedUrl = customShortenedUrl;
+            }
+            
             
             UrlObject urlObject = new UrlObject
             {

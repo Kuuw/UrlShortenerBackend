@@ -15,7 +15,7 @@ public class DatabaseController
         _urlObjects = database.GetCollection<UrlObject>("urls");
     }
 
-    public UrlObject Get(string id)
+    public UrlObject? Get(string id)
     {
         var filter = Builders<UrlObject>.Filter.Eq(url => url.Url, id);
         
