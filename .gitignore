@@ -13,3 +13,14 @@
 .vs/UrlShortenerBackend.generated/v17/DocumentLayout.backup.json
 .vs/UrlShortenerBackend.generated/v17/DocumentLayout.json
 urlShortener/Utils/Config.cs
+urlShortener/bin/Debug/net8.0/urlShortener.dll
+urlShortener/bin/Debug/net8.0/urlShortener.exe
+urlShortener/bin/Debug/net8.0/urlShortener.pdb
+urlShortener/obj/Debug/net8.0/apphost.exe
+urlShortener/obj/Debug/net8.0/urlShortener.AssemblyInfo.cs
+urlShortener/obj/Debug/net8.0/urlShortener.AssemblyInfoInputs.cache
+urlShortener/obj/Debug/net8.0/urlShortener.dll
+urlShortener/obj/Debug/net8.0/urlShortener.pdb
+urlShortener/obj/Debug/net8.0/urlShortener.sourcelink.json
+urlShortener/obj/Debug/net8.0/ref/urlShortener.dll
+urlShortener/obj/Debug/net8.0/refint/urlShortener.dll
